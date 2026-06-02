@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertix — Go Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #050912;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: #091425;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(42,95,255,0.18) 0%, rgba(9,20,37,0) 65%);
+    pointer-events: none;
+    filter: blur(20px);
+  }
+  .phone::after {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgba(212,175,55,0.22) 0%, rgba(9,20,37,0) 70%);
+    pointer-events: none;
+    filter: blur(16px);
+  }
+  .inner {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 56px 24px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    text-align: center;
+  }
+  .crown {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 4px;
+    background: linear-gradient(180deg, #2A1F3A 0%, #091425 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(212,175,55,0.2);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.8px;
+    line-height: 1.05;
+    margin: 14px 0 10px;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: #A0A8B8;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .features {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #121F33;
+    border-radius: 16px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+  }
+  .icon-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .feature-text {
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.1px;
+  }
+  .feature-text .muted {
+    color: #8A93A6;
+    font-weight: 400;
+  }
+  .plans {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .plan {
+    background: #0F1B2E;
+    border: 1px solid #1E2A40;
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .plan:hover {
+    transform: translateY(-1px);
+    border-color: #2a3d5e;
+  }
+  .plan-price {
+    color: #FFFFFF;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  .plan-price span {
+    color: #8A93A6;
+    font-weight: 500;
+    font-size: 15px;
+    margin-left: 1px;
+  }
+  .badge {
+    background: #1DB954;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 9px;
+    letter-spacing: 0.1px;
+    box-shadow: 0 2px 8px rgba(29,185,84,0.25);
+  }
+  .plan.monthly {
+    border-color: #2A5FFF;
+    background: linear-gradient(180deg, #101d31 0%, #0F1B2E 100%);
+    box-shadow: inset 0 0 0 1px rgba(42,95,255,0.2), 0 4px 12px rgba(42,95,255,0.08);
+  }
+  .plan.yearly {
+    background: #14233B;
+    border: 2px solid #3A7FFF;
+    padding: 20px 18px;
+    box-shadow: 0 0 20px rgba(58,127,255,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .plan.yearly .plan-price {
+    font-size: 18px;
+  }
+  .badges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+  }
+  .badge-gold {
+    background: #D4AF37;
+    background: linear-gradient(180deg, #E7C662 0%, #D4AF37 100%);
+    color: #000000;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 9px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 3px 10px rgba(212,175,55,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+  .cta-wrap {
+    margin-top: 24px;
+  }
+  .cta {
+    width: 100%;
+    height: 56px;
+    border-radius: 28px;
+    border: none;
+    background: #2A5FFF;
+    background: linear-gradient(180deg, #3D7BFF 0%, #2A5FFF 100%);
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(42,95,255,0.35), 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.15s ease;
+  }
+  .cta:active {
+    transform: scale(0.98);
+    box-shadow: 0 6px 16px rgba(42,95,255,0.3);
+  }
+  .legal {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #7A8499;
+    line-height: 1.4;
+    padding: 0 10px;
+  }
+  .restore {
+    display: block;
+    text-align: center;
+    margin-top: auto;
+    padding-top: 20px;
+    color: #8A93A6;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .restore:hover {
+    color: #A0A8B8;
+    text-decoration: underline;
+  }
+  .plan.selected {
+    box-shadow: 0 0 0 2px rgba(58,127,255,0.3);
+  }
+  @media (max-width: 410px) {
+    body { padding: 0; }
+    .phone { width: 100vw; height: 100vh; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="inner">
+      <header class="header">
+        <div class="crown">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M5 10l3.5-5 3.5 7 3.5-7 3.5 5v9H5v-9z" fill="url(#goldGrad)" stroke="#D4AF37" stroke-width="0.8" stroke-linejoin="round"/>
+            <circle cx="8.5" cy="5" r="1.2" fill="#FFE9A0"/>
+            <circle cx="12" cy="8" r="1.2" fill="#FFE9A0"/>
+            <circle cx="15.5" cy="5" r="1.2" fill="#FFE9A0"/>
+            <defs>
+              <linearGradient id="goldGrad" x1="5" y1="5" x2="19" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FDEBAC"/>
+                <stop offset="0.5" stop-color="#D4AF37"/>
+                <stop offset="1" stop-color="#B3871F"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1>Go Pro</h1>
+        <p class="subtitle">Convert unlimited images, no ads, no limits.</p>
+      </header>
+
+      <section class="features">
+        <div class="feature">
+          <div class="icon-wrap" style="background:#332E1A;color:#F7C744">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+          </div>
+          <div class="feature-text">Unlimited conversions <span class="muted">— no daily limit</span></div>
+        </div>
+        <div class="feature">
+          <div class="icon-wrap" style="background:#1A283F;color:#5B8DEF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="9" height="9" rx="2"/><rect x="12" y="12" width="9" height="9" rx="2"/><path d="M12 7v5M7 12h5"/></svg>
+          </div>
+          <div class="feature-text">Batch convert hundreds of photos at once</div>
+        </div>
+        <div class="feature">
+          <div class="icon-wrap" style="background:#1A332A;color:#22C55E">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l7.5 3.5v6c0 5.25-3.4 9.76-7.5 10.5-4.1-.74-7.5-5.25-7.5-10.5v-6L12 2z"/></svg>
+          </div>
+          <div class="feature-text">Ad-free experience</div>
+        </div>
+      </section>
+
+      <section class="plans">
+        <div class="plan" data-plan="weekly">
+          <div class="plan-price">$1.99 <span>/ week</span></div>
+          <div class="badge">3-day free trial</div>
+        </div>
+        <div class="plan monthly" data-plan="monthly">
+          <div class="plan-price">$4.99 <span>/ month</span></div>
+          <div class="badge">3-day free trial</div>
+        </div>
+        <div class="plan yearly selected" data-plan="yearly">
+          <div class="plan-price">$19.99 <span>/ year</span></div>
+          <div class="badges">
+            <div class="badge-gold">Save 67%</div>
+            <div class="badge">3-day free trial</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="cta-wrap">
+        <button class="cta" id="cta" type="button">Start Free Trial</button>
+        <p class="legal">Cancel anytime. No commitment. 3 days free then charged.</p>
+      </div>
+
+      <a href="#" class="restore">Restore Purchases</a>
+    </div>
+  </div>
+
+<script>
+  const plans = document.querySelectorAll('.plan');
+  const cta = document.getElementById('cta');
+  
+  plans.forEach(plan => {
+    plan.addEventListener('click', () => {
+      plans.forEach(p => p.classList.remove('selected'));
+      plan.classList.add('selected');
+      cta.style.transform = 'scale(0.98)';
+      setTimeout(() => cta.style.transform = '', 120);
+    });
+  });
+
+  cta.addEventListener('click', () => {
+    cta.textContent = 'Starting trial...';
+    cta.style.opacity = '0.9';
+    setTimeout(() => {
+      cta.textContent = 'Start Free Trial';
+      cta.style.opacity = '1';
+    }, 1500);
+  });
+</script>
+</body>
+</html>
